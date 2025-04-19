@@ -32,7 +32,30 @@ const Registro = ({ openLogin }) => {
       return;
     }
 
-    // Guardar en localStorage
+    // Obtener usuarios existentes (o iniciar vacío)
+    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+    // Verificar si ya existe ese correo
+    const existeUsuario = usuariosGuardados.find(
+      (u) => u.email === formData.email
+    );
+
+    if (existeUsuario) {
+      setError("Este correo ya está registrado.");
+      return;
+    }
+
+    // Agregar nuevo usuario
+    const nuevoUsuario = {
+      nombre: formData.nombre,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    const nuevosUsuarios = [...usuariosGuardados, nuevoUsuario];
+    localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
+
+    // Guardar usuario actual logueado
     localStorage.setItem("user", JSON.stringify({
       nombre: formData.nombre,
       email: formData.email,
@@ -40,8 +63,14 @@ const Registro = ({ openLogin }) => {
 
     setError("");
     setSuccess(true);
+    setFormData({
+      nombre: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
 
-    // Redirigir a cuenta después de unos segundos
+    // Redirigir a cuenta después de 2 segundos
     setTimeout(() => {
       navigate("/cuenta");
     }, 2000);
@@ -55,6 +84,7 @@ const Registro = ({ openLogin }) => {
         <input
           type="text"
           name="nombre"
+          value={formData.nombre}
           onChange={handleChange}
           required
         />
@@ -63,6 +93,7 @@ const Registro = ({ openLogin }) => {
         <input
           type="email"
           name="email"
+          value={formData.email}
           onChange={handleChange}
           required
         />
@@ -71,6 +102,7 @@ const Registro = ({ openLogin }) => {
         <input
           type="password"
           name="password"
+          value={formData.password}
           onChange={handleChange}
           required
         />
@@ -79,6 +111,7 @@ const Registro = ({ openLogin }) => {
         <input
           type="password"
           name="confirmPassword"
+          value={formData.confirmPassword}
           onChange={handleChange}
           required
         />

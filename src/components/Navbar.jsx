@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo-fondo.png";
 
 const Navbar = ({ openLogin }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setUser(storedUser);
+
+    // Escucha cambios en el localStorage
+    const handleStorageChange = () => {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.reload(); // O puedes usar navegación programática si lo prefieres
+  };
 
   return (
     <nav className="navbar">
@@ -13,7 +32,10 @@ const Navbar = ({ openLogin }) => {
 
       <div className="nav-links">
         {user ? (
-          <Link to="/cuenta">Mi cuenta</Link>
+          <>
+            <Link to="/cuenta">Mi cuenta</Link>
+            <button onClick={handleLogout}>Cerrar sesión</button>
+          </>
         ) : (
           <>
             <Link to="/registro">Registro</Link>
