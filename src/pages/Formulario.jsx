@@ -7,21 +7,24 @@ const Formulario = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     nacimiento: "",
-    personaQuerida: "",
+    persona: "",
     fechaImportante: "",
-    deseos: "",
   });
+
   const [loading, setLoading] = useState(false);
+  const [data_url, setDataUrl] = useState("");
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const generarNumerosUnicos = (cantidad, max) => {
     const numeros = new Set();
     while (numeros.size < cantidad) {
-      const num = Math.floor(Math.random() * max) + 1;
-      numeros.add(num);
+      numeros.add(Math.floor(Math.random() * max) + 1);
     }
     return Array.from(numeros);
   };
@@ -31,20 +34,25 @@ const Formulario = () => {
     setLoading(true);
 
     const numerosPrincipales = generarNumerosUnicos(6, 41);
-    const numerosComplementarios = generarNumerosUnicos(14, 25);
+    const numerosComplementarios = generarNumerosUnicos(4, 25);
 
     const payload = {
-      ...formData,
+      nombre: formData.nombre,
+      nacimiento: formData.nacimiento,
+      persona: formData.persona,
+      fechaImportante: formData.fechaImportante,
       numerosPrincipales,
       numerosComplementarios,
     };
 
     try {
-      // Este es el localStorage que espera PagoExitoso.jsx
-      localStorage.setItem("lecturaFormulario", JSON.stringify(payload));
-
+      // POST al backend para crear preferencia de Mercado Pago
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -65,21 +73,17 @@ const Formulario = () => {
   return (
     <div className="formulario-container">
       <div className="info-signos">
-        <h2>¡Hay signos en tus números!</h2>
+        <h1>¡Hay signos en tus números!</h1>
         <p>Para descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida.</p>
         <ul>
-          <li><strong>Tu nombre completo</strong> 🔎 la vibración de tu identidad.</li>
+          <li><strong>Tu nombre completo</strong> 🔵 la vibración de tu identidad.</li>
           <li><strong>Tu fecha de nacimiento</strong> 🌞 la energía que te acompaña desde el inicio.</li>
-          <li><strong>Una persona que admiras</strong> 👤 Aquello que marca un ideal para ti.</li>
-          <li><strong>Una fecha que no olvidas</strong> 🕰️ Momentos que dejan huella en tu historia.</li>
-          <li><strong>Tus deseos más profundos</strong> 💫 lo que anhelas atraer a tu vida.</li>
+          <li><strong>Una persona que admiras</strong> 🧘‍♀️ Aquello que marca un ideal para ti.</li>
+          <li><strong>Una fecha que no olvidas</strong> 🧘‍♀️ Momentos que dejan huella en tu historia.</li>
         </ul>
-        <p>Con esta información, descifraremos los números que resuenan con tu destino y te revelaremos su significado. 🔮</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="formulario-box">
-        <h3>COMPLETA TU INFORMACIÓN 🔐</h3>
-
+      <form className="formulario-box" onSubmit={handleSubmit}>
         <label>Nombre completo:</label>
         <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
 
@@ -87,16 +91,13 @@ const Formulario = () => {
         <input type="date" name="nacimiento" value={formData.nacimiento} onChange={handleChange} required />
 
         <label>Nombre de una persona querida:</label>
-        <input type="text" name="personaQuerida" value={formData.personaQuerida} onChange={handleChange} required />
+        <input type="text" name="persona" value={formData.persona} onChange={handleChange} required />
 
-        <label>Fecha importante:</label>
+        <label>Una fecha importante:</label>
         <input type="date" name="fechaImportante" value={formData.fechaImportante} onChange={handleChange} required />
 
-        <label>¿Qué deseas con más fuerza?</label>
-        <input type="text" name="deseos" value={formData.deseos} onChange={handleChange} required />
-
         <button type="submit" className="btn">
-          {loading ? "Descubriendo tus números..." : "Descubrir mis números"}
+          {loading ? "🔮 Descubriendo tus números..." : "Descubrir mis números"}
         </button>
       </form>
     </div>
