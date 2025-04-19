@@ -1,70 +1,63 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import "../assets/styles.css";
+import { useNavigate } from "react-router-dom";
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  if (!isOpen) return null;
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    if (!storedUser) {
-      setError("No hay usuarios registrados.");
-      return;
+    const usuarioEncontrado = usuarios.find(
+      (u) => u.email === email && u.password === password
+    );
+
+    if (usuarioEncontrado) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          nombre: usuarioEncontrado.nombre,
+          email: usuarioEncontrado.email,
+        })
+      );
+      setError("");
+      onClose();
+      navigate("/cuenta");
+    } else {
+      setError("Correo o contraseña incorrectos.");
     }
-
-    if (storedUser.email !== email) {
-      setError("El correo ingresado no está registrado.");
-      return;
-    }
-
-    if (storedUser.password !== password) {
-      setError("La contraseña es incorrecta.");
-      return;
-    }
-
-    // Login exitoso
-    setError(null);
-    onClose();
-    navigate("/cuenta");
-    window.location.reload(); // 🔄 Refresca el navbar
   };
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="modal">
         <h2>Iniciar sesión</h2>
-        <form className="boxform" onSubmit={handleLogin}>
+        <form onSubmit={handleLogin}>
+          <label>Correo electrónico</label>
           <input
             type="email"
-            placeholder="Correo electrónico"
-            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
+
+          <label>Contraseña</label>
           <input
             type="password"
-            placeholder="Contraseña"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button type="submit">Iniciar sesión</button>
 
+          <button type="submit">Entrar</button>
           {error && <p className="error">{error}</p>}
-
-          <p style={{ marginTop: "10px" }}>
-            <Link to="/recuperar-clave">¿Olvidaste tu contraseña?</Link>
-          </p>
         </form>
-        <button className="close-btn" onClick={onClose}>✖</button>
+
+        <button onClick={onClose}>Cerrar</button>
       </div>
     </div>
   );
