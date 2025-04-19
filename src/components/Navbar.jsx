@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo-fondo.png";
 
 const Navbar = ({ openLogin }) => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     setUser(storedUser);
 
-    // Escucha cambios en el localStorage
     const handleStorageChange = () => {
-      setUser(JSON.parse(localStorage.getItem("user")));
+      const updatedUser = JSON.parse(localStorage.getItem("user"));
+      setUser(updatedUser);
     };
 
     window.addEventListener("storage", handleStorageChange);
@@ -21,7 +22,8 @@ const Navbar = ({ openLogin }) => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    window.location.reload(); // O puedes usar navegación programática si lo prefieres
+    navigate("/"); // Redirigir al home
+    window.location.reload(); // Forzar recarga para reflejar el logout
   };
 
   return (
