@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
-const Registro = ({ openLogin }) => {
+const Registro = ({ openLogin, setUser }) => {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -23,7 +23,6 @@ const Registro = ({ openLogin }) => {
 
     const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
 
-    // Validaciones
     if (!formData.email.includes("@")) {
       setError("Ingresa un correo electrónico válido.");
       return;
@@ -50,18 +49,20 @@ const Registro = ({ openLogin }) => {
     usuariosGuardados.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
 
-    // Guardar como usuario activo
-    localStorage.setItem("user", JSON.stringify({
+    const sesion = {
       nombre: formData.nombre,
       email: formData.email,
-    }));
+    };
+
+    localStorage.setItem("user", JSON.stringify(sesion));
+    setUser(sesion); // ✅ Actualiza Navbar dinámicamente
 
     setError("");
     setSuccess(true);
 
     setTimeout(() => {
       navigate("/cuenta");
-    }, 2000);
+    }, 1500);
   };
 
   return (
@@ -97,4 +98,5 @@ const Registro = ({ openLogin }) => {
 };
 
 export default Registro;
+
 

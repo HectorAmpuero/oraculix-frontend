@@ -1,31 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo-fondo.png";
 
-const Navbar = ({ openLogin }) => {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    setUser(storedUser);
-
-    const handleStorageChange = () => {
-      const updatedUser = JSON.parse(localStorage.getItem("user"));
-      setUser(updatedUser);
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/"); // Redirigir al home
-    window.location.reload(); // Forzar recarga para reflejar el logout
-  };
-
+const Navbar = ({ user, handleLogout, openLogin }) => {
   return (
     <nav className="navbar">
       <Link to="/">
@@ -50,3 +27,4 @@ const Navbar = ({ openLogin }) => {
 };
 
 export default Navbar;
+

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; // no mostrar si no está abierto
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,21 +23,20 @@ const LoginModal = ({ isOpen, onClose }) => {
       return;
     }
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify({ nombre: user.nombre, email: user.email })
-    );
+    // guardar sesión activa
+    const sesion = { nombre: user.nombre, email: user.email };
+    localStorage.setItem("user", JSON.stringify(sesion));
+    setUser(sesion); // actualizar estado global
 
     setError("");
-    onClose();
+    onClose(); // cerrar modal
     navigate("/cuenta");
-    window.location.reload();
   };
 
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>INICIA SESIÓN</h2>
+        <h2>Inicia sesión</h2>
         <form className="boxform" onSubmit={handleSubmit}>
           <label>Correo electrónico</label>
           <input
@@ -56,7 +55,6 @@ const LoginModal = ({ isOpen, onClose }) => {
           />
 
           <button type="submit">Entrar</button>
-
           {error && <p className="error">{error}</p>}
         </form>
 
@@ -67,4 +65,5 @@ const LoginModal = ({ isOpen, onClose }) => {
 };
 
 export default LoginModal;
+
 
