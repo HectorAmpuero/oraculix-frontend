@@ -8,29 +8,36 @@ const LoginModal = ({ isOpen, onClose, setUser }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  if (!isOpen) return null; // no mostrar si no está abierto
+  if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-    const user = usuarios.find(
-      (u) => u.email === email && u.password === password
-    );
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/login`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
-    if (!user) {
-      setError("Correo o contraseña incorrectos.");
-      return;
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Error al iniciar sesión.");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.usuario));
+      setUser(data.usuario);
+      setError("");
+      onClose();
+      navigate("/cuenta");
+    } catch (err) {
+      setError("Error del servidor.");
     }
-
-    // guardar sesión activa
-    const sesion = { nombre: user.nombre, email: user.email };
-    localStorage.setItem("user", JSON.stringify(sesion));
-    setUser(sesion); // actualizar estado global
-
-    setError("");
-    onClose(); // cerrar modal
-    navigate("/cuenta");
   };
 
   return (
@@ -54,7 +61,7 @@ const LoginModal = ({ isOpen, onClose, setUser }) => {
             required
           />
 
-          <button type="submit">Entrar</button>
+          <button type="submit">Iniciar sesión</button>
           {error && <p className="error">{error}</p>}
         </form>
 
@@ -65,5 +72,6 @@ const LoginModal = ({ isOpen, onClose, setUser }) => {
 };
 
 export default LoginModal;
+
 
 

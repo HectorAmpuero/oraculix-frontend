@@ -28,3 +28,4 @@ const Navbar = ({ user, handleLogout, openLogin }) => {
 
 export default Navbar;
 
+

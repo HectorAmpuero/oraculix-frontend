@@ -29,7 +29,9 @@ function App() {
   return (
     <div className="app">
       {/* ✅ Se pasa user y setUser a Navbar */}
-      <Navbar openLogin={() => setIsLoginOpen(true)} user={user} setUser={setUser} />
+      <Navbar
+        openLogin={() => setIsLoginOpen(true)}user={user}setUser={setUser}handleLogout={() => {localStorage.removeItem("user");setUser(null);}}
+/>
 
       <Routes>
         <Route path="/" element={<Home />} />

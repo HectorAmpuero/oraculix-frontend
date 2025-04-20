@@ -18,10 +18,8 @@ const Registro = ({ openLogin, setUser }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios")) || [];
 
     if (!formData.email.includes("@")) {
       setError("Ingresa un correo electrónico válido.");
@@ -33,36 +31,38 @@ const Registro = ({ openLogin, setUser }) => {
       return;
     }
 
-    const yaExiste = usuariosGuardados.find((u) => u.email === formData.email);
-    if (yaExiste) {
-      setError("Este correo ya está registrado.");
-      return;
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/registrar`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre: formData.nombre,
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Error al registrar.");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.usuario));
+      setUser(data.usuario);
+      setError("");
+      setSuccess(true);
+
+      setTimeout(() => {
+        navigate("/cuenta");
+      }, 1000);
+    } catch (err) {
+      setError("Error del servidor.");
     }
-
-    // Guardar nuevo usuario
-    const nuevoUsuario = {
-      nombre: formData.nombre,
-      email: formData.email,
-      password: formData.password,
-    };
-
-    usuariosGuardados.push(nuevoUsuario);
-    localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
-
-    const sesion = {
-      nombre: formData.nombre,
-      email: formData.email,
-    };
-
-    localStorage.setItem("user", JSON.stringify(sesion));
-    setUser(sesion); // ✅ Actualiza Navbar dinámicamente
-
-    setError("");
-    setSuccess(true);
-
-    setTimeout(() => {
-      navigate("/cuenta");
-    }, 1500);
   };
 
   return (
@@ -79,7 +79,12 @@ const Registro = ({ openLogin, setUser }) => {
         <input type="password" name="password" onChange={handleChange} required />
 
         <label>Confirmar contraseña</label>
-        <input type="password" name="confirmPassword" onChange={handleChange} required />
+        <input
+          type="password"
+          name="confirmPassword"
+          onChange={handleChange}
+          required
+        />
 
         <button type="submit">Registrarse</button>
 
@@ -98,5 +103,6 @@ const Registro = ({ openLogin, setUser }) => {
 };
 
 export default Registro;
+
 
 
