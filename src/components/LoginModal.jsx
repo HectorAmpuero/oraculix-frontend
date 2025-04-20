@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
-const LoginModal = ({ closeLogin }) => {
+const LoginModal = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,16 +29,16 @@ const LoginModal = ({ closeLogin }) => {
     );
 
     setError("");
-    closeLogin(); // cierra el modal
+    onClose();
     navigate("/cuenta");
-    window.location.reload(); // fuerza recarga para que Navbar se actualice
+    window.location.reload();
   };
 
   return (
-    <div className="login-modal">
+    <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Inicia sesión</h2>
-        <form onSubmit={handleSubmit}>
+        <h2>INICIA SESIÓN</h2>
+        <form className="boxform" onSubmit={handleSubmit}>
           <label>Correo electrónico</label>
           <input
             type="email"
@@ -57,6 +59,8 @@ const LoginModal = ({ closeLogin }) => {
 
           {error && <p className="error">{error}</p>}
         </form>
+
+        <button className="close-btn" onClick={onClose}>Cerrar</button>
       </div>
     </div>
   );
