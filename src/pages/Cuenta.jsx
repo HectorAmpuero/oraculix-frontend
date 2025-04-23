@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./../assets/styles.css";
+import ValorModal from "../components/ValorModal";
+import "../assets/styles/styles.css";
 
 const Cuenta = () => {
-  const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
   const [lecturas, setLecturas] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = localStorage.getItem("user");
-
-    if (!userData) {
-      navigate("/"); // redirige si no está logueado
-      return;
+    const userParsed = JSON.parse(localStorage.getItem("user"));
+    if (userParsed) {
+      setUsuario(userParsed);
+      fetchHistorial(userParsed.email);
     }
-
-    const userParsed = JSON.parse(userData);
-    setUsuario(userParsed);
-
-    fetchHistorial(userParsed.email);
   }, []);
 
   const fetchHistorial = async (email) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${email}`);
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${encodeURIComponent(email)}`
+      );
+      if (!res.ok) {
+        throw new Error("La respuesta del servidor no fue exitosa");
+      }
       const data = await res.json();
       setLecturas(data);
     } catch (err) {
@@ -34,6 +34,7 @@ const Cuenta = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    navigate("/");
     window.location.reload();
   };
 
@@ -47,19 +48,19 @@ const Cuenta = () => {
 
   return (
     <div className="cuenta-container">
-      <h2>👤 Bienvenido, {usuario.nombre || "Usuario"}!</h2>
+      <h2 className="titulo-cuenta">👤 BIENVENIDO, {usuario.nombre?.toUpperCase() || "Usuario"}!</h2>
       <p>📧 Correo: {usuario.email}</p>
 
-      <div className="mensaje-bienvenida">
+      <div className="marco-bienvenida">
         <p>¿Estás listo para descubrir los números que guían tu vida?</p>
         <button className="btn" onClick={() => navigate("/formulario")}>
           ✨ Comenzar la lectura
         </button>
       </div>
 
-      <div className="frase-motivacional">
-        <p>💫 Tu energía atrae lo que tu alma necesita. Confía en tus números.</p>
-      </div>
+      <p className="frase-motivacional">
+        🎧 Tu energía atrae lo que tu alma necesita. Confía en tus números.
+      </p>
 
       <button className="btn" onClick={() => setModalVisible(true)}>
         📖 Ver historial de lecturas
@@ -71,27 +72,36 @@ const Cuenta = () => {
 
       {/* Modal de Historial */}
       {modalVisible && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <button className="close-btn" onClick={() => setModalVisible(false)}>✖</button>
-            <h3>📜 Tus lecturas anteriores</h3>
-            {lecturas.length === 0 ? (
-              <p>No tienes lecturas previas.</p>
-            ) : (
-              lecturas.map((lectura, index) => (
-                <div key={index} className="historial-item">
-                  <p><strong>Fecha:</strong> {new Date(lectura.fecha_creacion).toLocaleDateString()}</p>
-                  <p><strong>Números principales:</strong> {lectura.numeros_principales.join(", ")}</p>
-                  <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios.join(", ")}</p>
-                  <p><strong>Interpretación:</strong> {lectura.interpretacion || "No disponible"}</p>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+        <ValorModal onClose={() => setModalVisible(false)} titulo="Historial de Lecturas">
+          {lecturas.length === 0 ? (
+            <p>Aún no has hecho ninguna lectura.</p>
+          ) : (
+            lecturas.map((lectura, index) => (
+              <div className="historial-item" key={index}>
+                <p>
+                  <strong>Fecha:</strong>{" "}
+                  {new Date(lectura.fecha_creacion).toLocaleDateString()}
+                </p>
+                <p>
+                  <strong>Números principales:</strong>{" "}
+                  {lectura.numeros_principales.join(", ")}
+                </p>
+                <p>
+                  <strong>Complementarios:</strong>{" "}
+                  {lectura.numeros_complementarios.join(", ")}
+                </p>
+                <p>
+                  <strong>Interpretación:</strong> {lectura.interpretacion || "No disponible"}
+                </p>
+                <hr />
+              </div>
+            ))
+          )}
+        </ValorModal>
       )}
     </div>
   );
 };
 
 export default Cuenta;
+
