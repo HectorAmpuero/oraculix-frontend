@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ValorModal from "../components/ValorModal";
-import "../assets/styles/styles.css";
+import "../assets/styles.css";
 
 const Cuenta = () => {
   const [usuario, setUsuario] = useState(null);
