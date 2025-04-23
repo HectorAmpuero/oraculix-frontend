@@ -1,48 +1,38 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import analizarPalabras from "../utils/analizarPalabras";
 import "../assets/styles.css";
 
 const Formulario = () => {
   const navigate = useNavigate();
-  const [formulario, setFormulario] = useState({
+
+  const [formData, setFormData] = useState({
     nombre: "",
     nacimiento: "",
     persona: "",
     fechaImportante: "",
-    deseos: "", // <-- nuevo campo en la tabla
+    deseos: "",
   });
 
   const [enviando, setEnviando] = useState(false);
 
   const handleChange = (e) => {
-    setFormulario({
-      ...formulario,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const generarNumeros = (cantidad, max) => {
-    const numeros = new Set();
-    while (numeros.size < cantidad) {
-      const numero = Math.floor(Math.random() * max) + 1;
-      numeros.add(numero);
-    }
-    return Array.from(numeros);
-  };
-
-  const handleSubmit = async (e) => {
+  const generarNumeros = async (e) => {
     e.preventDefault();
     setEnviando(true);
 
-    const numerosPrincipales = generarNumeros(6, 41);
-    const numerosComplementarios = generarNumeros(2, 25);
+    const numerosPrincipales = analizarPalabras(formData.nombre, 6, 41);
+    const numerosComplementarios = analizarPalabras(formData.persona, 22, 59);
 
     const payload = {
-      nombre: formulario.nombre,
-      nacimiento: formulario.nacimiento,
-      personaQuerida: formulario.persona,
-      fechaImportante: formulario.fechaImportante,
-      deseos: formulario.deseos, // <-- agregado en el payload
+      nombre: formData.nombre,
+      nacimiento: formData.nacimiento,
+      personaQuerida: formData.persona,
+      fechaImportante: formData.fechaImportante,
+      deseos: formData.deseos,
       numerosPrincipales,
       numerosComplementarios,
     };
@@ -50,46 +40,44 @@ const Formulario = () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const data = await response.json();
 
-      if (data && data.init_point) {
-        window.location.href = data.init_point;
+      if (data.id) {
+        window.location.href = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=${data.id}`;
       } else {
-        alert("Hubo un error al enviar los datos.");
-        setEnviando(false);
+        alert("Hubo un error al enviar la info a pago.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error en el envío:", error);
       alert("Ocurrió un error inesperado.");
-      setEnviando(false);
     }
+
+    setEnviando(false);
   };
 
   return (
     <div className="formulario-container">
-      <p className="intro">
-        Para descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida. ✨
-      </p>
-      <ul className="bullet-points">
-        <li>🔢 Tu fecha de nacimiento: el inicio de tu camino en esta vida.</li>
-        <li>💖 El nombre de una persona significativa: alguien que ha marcado tu historia.</li>
-        <li>📅 Una fecha que resuene contigo: el momento que dejó huella en tus recuerdos.</li>
-        <li>🌱 Tus deseos más profundos: aquello que deseas cultivar en tu interior.</li>
-      </ul>
+      <div className="info-signos">
+        <h2>✨ Antes de descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida:</h2>
+        <ul>
+          <li>📅 Tu fecha de nacimiento: Nos ayuda a entender tus patrones energéticos.</li>
+          <li>💖 El nombre de una persona querida: Puede ser alguien que ames o hayas amado.</li>
+          <li>📆 Una fecha importante en tu vida: Ayuda a ver los ciclos que guían tu historia.</li>
+          <li>🌠 Tus deseos más profundos: Aquello que anhelas en tu interior. Nos da dirección.</li>
+        </ul>
+      </div>
 
-      <form onSubmit={handleSubmit} className="formulario">
+      <form className="formulario-box" onSubmit={generarNumeros}>
         <label htmlFor="nombre">Nombre completo:</label>
         <input
           type="text"
           id="nombre"
           name="nombre"
-          value={formulario.nombre}
+          value={formData.nombre}
           onChange={handleChange}
           required
         />
@@ -99,7 +87,7 @@ const Formulario = () => {
           type="date"
           id="nacimiento"
           name="nacimiento"
-          value={formulario.nacimiento}
+          value={formData.nacimiento}
           onChange={handleChange}
           required
         />
@@ -109,7 +97,7 @@ const Formulario = () => {
           type="text"
           id="persona"
           name="persona"
-          value={formulario.persona}
+          value={formData.persona}
           onChange={handleChange}
           required
         />
@@ -119,25 +107,23 @@ const Formulario = () => {
           type="date"
           id="fechaImportante"
           name="fechaImportante"
-          value={formulario.fechaImportante}
+          value={formData.fechaImportante}
           onChange={handleChange}
           required
         />
 
-        {/* 🌟 CAMPO NUEVO - Deseos */}
-        <label htmlFor="deseos">¿Qué deseas manifestar o trabajar?</label>
+        <label htmlFor="deseos">Cuéntame tus deseos:</label>
         <textarea
           id="deseos"
           name="deseos"
           rows="4"
-          placeholder="Ej: Amor propio, claridad, abundancia..."
-          value={formulario.deseos}
+          value={formData.deseos}
           onChange={handleChange}
           required
-        />
+        ></textarea>
 
-        <button type="submit" disabled={enviando}>
-          {enviando ? "Descubriendo tus números..." : "Descubrir mis números"}
+        <button type="submit" className="btn" disabled={enviando}>
+          {enviando ? "Enviando..." : "Descubrir mis números"}
         </button>
       </form>
     </div>
@@ -145,4 +131,5 @@ const Formulario = () => {
 };
 
 export default Formulario;
+
 
