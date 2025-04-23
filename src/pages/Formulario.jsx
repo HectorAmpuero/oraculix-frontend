@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/styles/styles.css";
+import "../assets/styles.css";
 
 const Formulario = () => {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ const Formulario = () => {
     nacimiento: "",
     persona: "",
     fechaImportante: "",
-    deseos: "", // <-- nuevo campo
+    deseos: "", // <-- nuevo campo en la tabla
   });
 
   const [enviando, setEnviando] = useState(false);
