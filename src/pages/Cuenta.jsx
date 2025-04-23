@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ValorModal from "../components/ValorModal";
-import "../assets/styles.css";
+import "../assets/styles.css"; 
 
 const Cuenta = () => {
   const [usuario, setUsuario] = useState(null);
   const [lecturas, setLecturas] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const navigate = useNavigate();
-
+  // Cambio de ruta corregido para styles.css
   useEffect(() => {
     const userParsed = JSON.parse(localStorage.getItem("user"));
     if (userParsed) {
