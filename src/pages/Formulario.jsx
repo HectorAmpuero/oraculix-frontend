@@ -1,52 +1,53 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/styles.css";
+import "../assets/styles/styles.css";
 
 const Formulario = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const [formulario, setFormulario] = useState({
     nombre: "",
     nacimiento: "",
     persona: "",
     fechaImportante: "",
+    deseos: "", // <-- nuevo campo
   });
 
-  const [loading, setLoading] = useState(false);
-  const [data_url, setDataUrl] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormulario({
+      ...formulario,
       [e.target.name]: e.target.value,
     });
   };
 
-  const generarNumerosUnicos = (cantidad, max) => {
+  const generarNumeros = (cantidad, max) => {
     const numeros = new Set();
     while (numeros.size < cantidad) {
-      numeros.add(Math.floor(Math.random() * max) + 1);
+      const numero = Math.floor(Math.random() * max) + 1;
+      numeros.add(numero);
     }
     return Array.from(numeros);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setEnviando(true);
 
-    const numerosPrincipales = generarNumerosUnicos(6, 41);
-    const numerosComplementarios = generarNumerosUnicos(4, 25);
+    const numerosPrincipales = generarNumeros(6, 41);
+    const numerosComplementarios = generarNumeros(2, 25);
 
     const payload = {
-      nombre: formData.nombre,
-      nacimiento: formData.nacimiento,
-      persona: formData.persona,
-      fechaImportante: formData.fechaImportante,
+      nombre: formulario.nombre,
+      nacimiento: formulario.nacimiento,
+      personaQuerida: formulario.persona,
+      fechaImportante: formulario.fechaImportante,
+      deseos: formulario.deseos, // <-- agregado en el payload
       numerosPrincipales,
       numerosComplementarios,
     };
 
     try {
-      // POST al backend para crear preferencia de Mercado Pago
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
         method: "POST",
         headers: {
@@ -57,47 +58,86 @@ const Formulario = () => {
 
       const data = await response.json();
 
-      if (data.id) {
-        window.location.href = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=${data.id}`;
+      if (data && data.init_point) {
+        window.location.href = data.init_point;
       } else {
-        alert("Hubo un error al generar el enlace de pago.");
-        setLoading(false);
+        alert("Hubo un error al enviar los datos.");
+        setEnviando(false);
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Ocurrió un error inesperado.");
-      setLoading(false);
+      setEnviando(false);
     }
   };
 
   return (
     <div className="formulario-container">
-      <div className="info-signos">
-        <h1>¡Hay signos en tus números!</h1>
-        <p>Para descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida.</p>
-        <ul>
-          <li><strong>Tu nombre completo</strong> 🔵 la vibración de tu identidad.</li>
-          <li><strong>Tu fecha de nacimiento</strong> 🌞 la energía que te acompaña desde el inicio.</li>
-          <li><strong>Una persona que admiras</strong> 🧘‍♀️ Aquello que marca un ideal para ti.</li>
-          <li><strong>Una fecha que no olvidas</strong> 🧘‍♀️ Momentos que dejan huella en tu historia.</li>
-        </ul>
-      </div>
+      <p className="intro">
+        Para descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida. ✨
+      </p>
+      <ul className="bullet-points">
+        <li>🔢 Tu fecha de nacimiento: el inicio de tu camino en esta vida.</li>
+        <li>💖 El nombre de una persona significativa: alguien que ha marcado tu historia.</li>
+        <li>📅 Una fecha que resuene contigo: el momento que dejó huella en tus recuerdos.</li>
+        <li>🌱 Tus deseos más profundos: aquello que deseas cultivar en tu interior.</li>
+      </ul>
 
-      <form className="formulario-box" onSubmit={handleSubmit}>
-        <label>Nombre completo:</label>
-        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+      <form onSubmit={handleSubmit} className="formulario">
+        <label htmlFor="nombre">Nombre completo:</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          value={formulario.nombre}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Fecha de nacimiento:</label>
-        <input type="date" name="nacimiento" value={formData.nacimiento} onChange={handleChange} required />
+        <label htmlFor="nacimiento">Fecha de nacimiento:</label>
+        <input
+          type="date"
+          id="nacimiento"
+          name="nacimiento"
+          value={formulario.nacimiento}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Nombre de una persona querida:</label>
-        <input type="text" name="persona" value={formData.persona} onChange={handleChange} required />
+        <label htmlFor="persona">Nombre de una persona querida:</label>
+        <input
+          type="text"
+          id="persona"
+          name="persona"
+          value={formulario.persona}
+          onChange={handleChange}
+          required
+        />
 
-        <label>Una fecha importante:</label>
-        <input type="date" name="fechaImportante" value={formData.fechaImportante} onChange={handleChange} required />
+        <label htmlFor="fechaImportante">Una fecha importante:</label>
+        <input
+          type="date"
+          id="fechaImportante"
+          name="fechaImportante"
+          value={formulario.fechaImportante}
+          onChange={handleChange}
+          required
+        />
 
-        <button type="submit" className="btn">
-          {loading ? "🔮 Descubriendo tus números..." : "Descubrir mis números"}
+        {/* 🌟 CAMPO NUEVO - Deseos */}
+        <label htmlFor="deseos">¿Qué deseas manifestar o trabajar?</label>
+        <textarea
+          id="deseos"
+          name="deseos"
+          rows="4"
+          placeholder="Ej: Amor propio, claridad, abundancia..."
+          value={formulario.deseos}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit" disabled={enviando}>
+          {enviando ? "Descubriendo tus números..." : "Descubrir mis números"}
         </button>
       </form>
     </div>
