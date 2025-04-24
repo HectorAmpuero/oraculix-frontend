@@ -58,7 +58,7 @@ const Formulario = () => {
     setEnviando(false);
   };
 
-    //formulario
+    //formulariogit
   return (
     <div className="formulario-container">
       <div className="info-signos">
