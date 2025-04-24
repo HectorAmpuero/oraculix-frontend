@@ -62,12 +62,12 @@ const Formulario = () => {
   return (
     <div className="formulario-container">
       <div className="info-signos">
-        <h2>✨ Antes de descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida:</h2>
+        <h2>Antes de descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida:</h2>
         <ul>
-          <li>📅 Tu fecha de nacimiento: Nos ayuda a entender tus patrones energéticos.</li>
-          <li>💖 El nombre de una persona querida: Puede ser alguien que ames o hayas amado.</li>
-          <li>📆 Una fecha importante en tu vida: Ayuda a ver los ciclos que guían tu historia.</li>
-          <li>🌠 Tus deseos más profundos: Aquello que anhelas en tu interior. Nos da dirección.</li>
+          <li>📅Tu fecha de nacimiento: Nos ayuda a entender tus patrones energéticos.</li> <br />
+          <li>💖El nombre de una persona querida: Puede ser alguien que ames o hayas amado.</li> <br />
+          <li>📆Una fecha importante en tu vida: Ayuda a ver los ciclos que guían tu historia.</li> <br />
+          <li>🌠Tus deseos más profundos: Aquello que anhelas en tu interior. Nos da dirección.</li> <br />
         </ul>
       </div>
 
@@ -123,7 +123,7 @@ const Formulario = () => {
         ></textarea>
 
         <button type="submit" className="btn" disabled={enviando}>
-          {enviando ? "Enviando..." : "Descubrir mis números"}
+          {enviando ? "Descubriendo tus números" : "Descubrir mis números"}
         </button>
       </form>
     </div>
