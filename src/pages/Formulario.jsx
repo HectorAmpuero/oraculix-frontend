@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import analizarPalabras from "../utils/analizarPalabras";
 import "../assets/styles.css";
 
 const Formulario = () => {
@@ -59,6 +58,7 @@ const Formulario = () => {
     setEnviando(false);
   };
 
+    //formulario
   return (
     <div className="formulario-container">
       <div className="info-signos">
