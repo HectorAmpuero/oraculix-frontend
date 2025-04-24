@@ -22,19 +22,16 @@ const Formulario = () => {
   const generarNumeros = async (e) => {
     e.preventDefault();
     setEnviando(true);
-
-    const numerosPrincipales = analizarPalabras(formData.nombre, 6, 41);
-    const numerosComplementarios = analizarPalabras(formData.persona, 22, 59);
-
+  
     const payload = {
       nombre: formData.nombre,
       nacimiento: formData.nacimiento,
       personaQuerida: formData.persona,
       fechaImportante: formData.fechaImportante,
-      deseos: formData.deseos,
-      numerosPrincipales,
-      numerosComplementarios,
-    };
+      deseos: formData.deseos
+        // 🚫 No mandes numerosPrincipales ni numerosComplementarios
+            };
+
 
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
