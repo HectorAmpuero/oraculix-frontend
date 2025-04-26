@@ -3,8 +3,12 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'dist',
+  },
   server: {
-    port: 5173,  // Asegura que está en el puerto correcto
-    open: true,  // Abre automáticamente en el navegador
+    port: 5173,
+    open: true,
+    historyApiFallback: true,
   },
 });
