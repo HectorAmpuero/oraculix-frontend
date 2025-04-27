@@ -63,7 +63,6 @@ a > img:hover {
 } 
 
 /* SLIDE 1 */
-
 .slide1 {
   background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
   color: var(--text-light);
@@ -75,6 +74,7 @@ a > img:hover {
   padding: 20px; 
   height: 100vh;
 }
+
 
 h1 {
   font-size: 300%;
