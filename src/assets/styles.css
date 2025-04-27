@@ -826,51 +826,54 @@ footer .footer-links {
   margin-top: 2.5rem;
 }
 
-/* MODAL REGISTRO */
-.modal-registro-overlay {
+/* Modal de advertencia */
+.advertencia-modal {
+  background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 30px rgba(187, 144, 255, 0.4);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  color: #ffffff;
+  animation: fadeIn 0.5s ease;
+  z-index: 1000;
+}
+
+/* Opcional: mismo efecto de entrada suave */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Botones dentro del modal */
+.advertencia-modal .btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Contenedor oscuro detrás */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(12, 5, 18, 0.8);
+  backdrop-filter: blur(3px);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 999;
 }
-
-.modal-registro {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-  max-width: 400px;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
-}
-
-.modal-registro h3 {
-  color: #fdd835;
-  margin-bottom: 1rem;
-}
-
-.modal-registro p {
-  color: #ffffff;
-  margin-bottom: 1.5rem;
-}
-
-.modal-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.cancelar-btn {
-  background: none;
-  border: 1px solid #ffffff;
-  color: #ffffff;
-}
-
 
 /* MODAL FOOTER */
 .modal-overlay {
