@@ -26,7 +26,7 @@ const Historial = () => {
 
   return (
     <div className="historial-container">
-      <h2 className="titulo-historial">📚 Historial de Lecturas</h2>
+      <h2 className="titulo-historial">Historial de Lecturas</h2>
 
       {lecturas.length === 0 ? (
         <p>No hay lecturas registradas todavía.</p>
@@ -37,7 +37,7 @@ const Historial = () => {
               <h3>{lectura.nombre}</h3>
               <p><strong>Números principales:</strong> {lectura.numeros_principales}</p>
               <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios}</p>
-              <p><strong>Interpretación:</strong> {lectura.interpretacion || "Sin interpretación disponible."}</p>
+              <p className="interpretacion"><strong>Interpretación:</strong> {lectura.interpretacion || "Sin interpretación disponible."}</p>
               <p className="fecha-lectura">
                 📅 {new Date(lectura.fecha_creacion).toLocaleDateString()}
               </p>
