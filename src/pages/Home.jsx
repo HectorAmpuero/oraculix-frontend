@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../assets/styles.css"; 
+import "../assets/styles.css";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [showModalRegistro, setShowModalRegistro] = useState(false);
 
-  // Función para hacer scroll suave entre los slides
+  // Función para hacer scroll suave entre slides
   const scrollToSlide = (slideId) => {
     document.getElementById(slideId).scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Nuevo: Función para manejar botón "Comenzar mi lectura"
+  const handleComenzarLectura = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      navigate("/formulario");
+    } else {
+      setShowModalRegistro(true);
+    }
   };
 
   return (
@@ -40,23 +52,41 @@ const Home = () => {
       {/* Slide 3 */}
       <section id="slide3" className="slide3">
         <div className="cont2">
-            <p>
-              <strong>Por solo $1.500 CLP</strong>, obtén una lectura numerológica 
-                personalizada basada en tus datos más importantes.
-            </p>
-            <p className="textp3">
-              Cada número tiene un propósito en tu vida... Descubre lo que el universo quiere mostrarte.  
-            </p>
-            <p className="textp3">
-             Una pequeña inversión para un gran descubrimiento
-            </p>
-            <button className="btn" onClick={() => navigate("/formulario")}>
-                  Comenzar mi lectura
-            </button>
-      </div>
-</section>
+          <p>
+            <strong>Por solo $1.500 CLP</strong>, obtén una lectura numerológica personalizada basada en tus datos más importantes.
+          </p>
+          <p className="textp3">
+            Cada número tiene un propósito en tu vida... Descubre lo que el universo quiere mostrarte.  
+          </p>
+          <p className="textp3">
+            Una pequeña inversión para un gran descubrimiento
+          </p>
+          <button className="btn" onClick={handleComenzarLectura}>
+            Comenzar mi lectura
+          </button>
+        </div>
+      </section>
+
+      {/* Modal de Registro */}
+      {showModalRegistro && (
+        <div className="modal-registro-overlay">
+          <div className="modal-registro">
+            <h3>¡Antes de comenzar tu lectura!</h3>
+            <p>Debes registrarte o iniciar sesión para descubrir tus números.</p>
+            <div className="modal-buttons">
+              <button className="btn" onClick={() => navigate("/registro")}>
+                Ir a Registro
+              </button>
+              <button className="btn cancelar-btn" onClick={() => setShowModalRegistro(false)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Home;
+
