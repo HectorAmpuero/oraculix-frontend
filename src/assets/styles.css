@@ -348,6 +348,24 @@ div > .textp2 {
   transition: all 0.3s ease;
 }
 
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #555;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
 /* Estilos del Modal */
 .modal-overlay {
   position: fixed;
