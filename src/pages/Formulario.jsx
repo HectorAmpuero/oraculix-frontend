@@ -120,7 +120,7 @@ const Formulario = () => {
         ></textarea>
 
         <button type="submit" className="btn" disabled={enviando}>
-          {enviando ? "Descubriendo tus números" : "Descubrir mis números"}
+            {enviando ? (<><span className="spinner"></span> Descubriendo tus números...</>) : ("Descubrir mis números")}
         </button>
       </form>
     </div>
