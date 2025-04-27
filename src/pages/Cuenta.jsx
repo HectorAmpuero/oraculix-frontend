@@ -1,36 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ValorModal from "../components/ValorModal";
-import "../assets/styles.css"; 
+import "../assets/styles.css";
 
 const Cuenta = () => {
   const [usuario, setUsuario] = useState(null);
-  const [lecturas, setLecturas] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const navigate = useNavigate();
-  // Cambio de ruta corregido para styles.css
+
   useEffect(() => {
     const userParsed = JSON.parse(localStorage.getItem("user"));
     if (userParsed) {
       setUsuario(userParsed);
-      fetchHistorial(userParsed.email);
     }
   }, []);
-
-  const fetchHistorial = async (email) => {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${encodeURIComponent(email)}`
-      );
-      if (!res.ok) {
-        throw new Error("La respuesta del servidor no fue exitosa");
-      }
-      const data = await res.json();
-      setLecturas(data);
-    } catch (err) {
-      console.error("❌ Error al cargar historial:", err);
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -62,43 +43,13 @@ const Cuenta = () => {
         🎧 Tu energía atrae lo que tu alma necesita. Confía en tus números.
       </p>
 
-      <button className="btn" onClick={() => setModalVisible(true)}>
+      <button className="btn" onClick={() => navigate("/historial")}>
         📖 Ver historial de lecturas
       </button>
 
       <button className="btn logout" onClick={handleLogout}>
         🔒 Cerrar sesión
       </button>
-
-      {/* Modal de Historial */}
-      {modalVisible && (
-        <ValorModal onClose={() => setModalVisible(false)} titulo="Historial de Lecturas">
-          {lecturas.length === 0 ? (
-            <p>Aún no has hecho ninguna lectura.</p>
-          ) : (
-            lecturas.map((lectura, index) => (
-              <div className="historial-item" key={index}>
-                <p>
-                  <strong>Fecha:</strong>{" "}
-                  {new Date(lectura.fecha_creacion).toLocaleDateString()}
-                </p>
-                <p>
-                  <strong>Números principales:</strong>{" "}
-                  {lectura.numeros_principales.join(", ")}
-                </p>
-                <p>
-                  <strong>Complementarios:</strong>{" "}
-                  {lectura.numeros_complementarios.join(", ")}
-                </p>
-                <p>
-                  <strong>Interpretación:</strong> {lectura.interpretacion || "No disponible"}
-                </p>
-                <hr />
-              </div>
-            ))
-          )}
-        </ValorModal>
-      )}
     </div>
   );
 };
