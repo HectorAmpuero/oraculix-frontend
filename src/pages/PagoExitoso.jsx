@@ -5,65 +5,40 @@ const PagoExitoso = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const procesarLectura = async () => {
+    const procesarPagoExitoso = async () => {
       try {
-        const lecturaGuardada = localStorage.getItem("lecturaFormulario");
-        if (!lecturaGuardada || lecturaGuardada === "undefined") {
-          alert("No se encontraron datos para procesar la lectura.");
+        const urlParams = new URLSearchParams(window.location.search);
+        const preferenceId = urlParams.get("preference_id");
+
+        if (!preferenceId) {
+          alert("No se encontró la referencia del pago.");
           return navigate("/");
         }
 
-        const payload = JSON.parse(lecturaGuardada);
+        console.log("🔍 Buscando lectura para preference_id:", preferenceId);
 
+        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura/preference/${preferenceId}`);
+        const data = await res.json();
 
-        console.log("📦 Payload que se enviará al backend:", payload);
-
-        // Paso 1: Guardar lectura en BD
-        const reslectura = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!resLectura.ok) {
-          throw new Error("Error al guardar la lectura en la base de datos.");
+        if (!res.ok) {
+          throw new Error(data.error || "No se encontró la lectura asociada.");
         }
 
-        const dataLectura = await resLectura.json();
-
-        // Paso 2: Generar interpretación con OpenAI
-        const resAI = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/interpretacion`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nombre: payload.nombre,
-            deseos: payload.deseos,
-            numerosPrincipales: payload.numerosPrincipales,
-            numerosComplementarios: payload.numerosComplementarios,
-          }),
-        });
-
-        const dataAI = await resAI.json();
-
-        // Paso 3: Guardar en localStorage
-        localStorage.setItem("lecturaNumerologica", JSON.stringify(dataLectura.lectura));
+        // Guardamos en localStorage
+        localStorage.setItem("lecturaNumerologica", JSON.stringify(data.lectura));
         localStorage.setItem("resultadoNumerologico", JSON.stringify({
-          principales: payload.numerosPrincipales,
-          complementarios: payload.numerosComplementarios
+          principales: data.lectura.numeros_principales.split(", "),
+          complementarios: data.lectura.numeros_complementarios.split(", ")
         }));
-        localStorage.setItem("interpretacionNumerologica", dataAI.interpretacion);
+        localStorage.setItem("interpretacionNumerologica", data.lectura.interpretacion);
 
-        // Limpia el temporal
-        localStorage.removeItem("lecturaFormulario");
-
-        // Redirige a resultados
         navigate("/resultados");
       } catch (error) {
-        console.error("Error al procesar el pago exitoso:", error);
+        console.error("❌ Error al procesar el pago exitoso:", error);
       }
     };
 
-    procesarLectura();
+    procesarPagoExitoso();
   }, [navigate]);
 
   return (
@@ -75,4 +50,5 @@ const PagoExitoso = () => {
 };
 
 export default PagoExitoso;
+
 
