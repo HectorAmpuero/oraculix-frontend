@@ -15,6 +15,9 @@ const PagoExitoso = () => {
 
         const payload = JSON.parse(lecturaGuardada);
 
+
+        console.log("📦 Payload que se enviará al backend:", payload);
+
         // Paso 1: Guardar lectura en BD
         const reslectura = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura`, {
           method: "POST",
