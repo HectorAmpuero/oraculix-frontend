@@ -4,14 +4,29 @@ import "../assets/styles.css";
 
 const Cuenta = () => {
   const [usuario, setUsuario] = useState(null);
+  const [lecturas, setLecturas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const userParsed = JSON.parse(localStorage.getItem("user"));
     if (userParsed) {
       setUsuario(userParsed);
+      fetchHistorial(userParsed.email);
     }
   }, []);
+
+  const fetchHistorial = async (email) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${encodeURIComponent(email)}`);
+      if (!res.ok) {
+        throw new Error("La respuesta del servidor no fue exitosa");
+      }
+      const data = await res.json();
+      setLecturas(data);
+    } catch (err) {
+      console.error("❌ Error al cargar historial:", err);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -30,7 +45,7 @@ const Cuenta = () => {
   return (
     <div className="cuenta-container">
       <h2 className="titulo-cuenta">👤 BIENVENIDO, {usuario.nombre?.toUpperCase() || "Usuario"}!</h2>
-      <p>📧 Correo: {usuario.email}</p>
+      <p> Correo: {usuario.email}</p>
 
       <div className="marco-bienvenida">
         <p>¿Estás listo para descubrir los números que guían tu vida?</p>
@@ -40,7 +55,7 @@ const Cuenta = () => {
       </div>
 
       <p className="frase-motivacional">
-        🎧 Tu energía atrae lo que tu alma necesita. Confía en tus números.
+        Tu energía atrae lo que tu alma necesita. Confía en tus números.
       </p>
 
       <button className="btn" onClick={() => navigate("/historial")}>
@@ -55,4 +70,5 @@ const Cuenta = () => {
 };
 
 export default Cuenta;
+
 
