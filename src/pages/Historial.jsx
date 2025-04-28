@@ -44,7 +44,7 @@ const Historial = () => {
 
   return (
     <div className="historial-container">
-      <h2 className="titulo-historial">HISTORIAL DE LECTURAS</h2>
+      <h2 className="titulo-historial">📚 HISTORIAL DE LECTURAS</h2>
 
       {lecturas.length === 0 ? (
         <p>No hay lecturas registradas todavía.</p>
@@ -53,10 +53,18 @@ const Historial = () => {
           <div key={index} className="historial-item">
             <p><strong>Nombre:</strong> {lectura.nombre}</p>
             <p><strong>Fecha de creación:</strong> {new Date(lectura.fecha_creacion).toLocaleDateString()}</p>
-            <p><strong>Números principales:</strong> {lectura.numeros_principales}</p>
-            <p><strong>Complementarios:</strong> {lectura.numeros_complementarios}</p>
+
+            <p><strong>Números principales:</strong> {lectura.numeros_principales?.split(", ").map((num, idx) => (
+              <span key={idx}>{num} </span>
+            ))}</p>
+
+            <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios?.split(", ").map((num, idx) => (
+              <span key={idx}>{num} </span>
+            ))}</p>
+
             <p><strong>Interpretación:</strong></p>
             <p>{lectura.interpretacion}</p>
+
             <hr />
           </div>
         ))
@@ -70,5 +78,6 @@ const Historial = () => {
 };
 
 export default Historial;
+
 
 
