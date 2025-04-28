@@ -672,9 +672,13 @@ div > .textp2 {
 
 .numero-flotante {
   position: absolute;
-  color: rgba(255, 255, 255, 0.15);
-  font-weight: bold;
-  animation: flotar infinite alternate ease-in-out;
+  color: rgba(255, 255, 255, 0.10);
+  font-family: 'Cinzel Decorative', serif;
+  font-weight: 500;
+  animation: flotar infinite alternate ease-in-out, rotarSuave infinite linear;
+  animation-duration: 8s, 60s; /* Flotar 8s, Rotar 60s */
+  pointer-events: none;
+  user-select: none;
 }
 
 @keyframes flotar {

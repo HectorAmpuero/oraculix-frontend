@@ -2,7 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
-const numeros = [3, 7, 11, 22, 5, 9, 4, 13, 8, 21, 1, 6];
+const numeros = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 27, 28, 29, 30, 33,
+    35, 38, 40, 42, 44, 47, 50, 55, 60, 66
+  ];
 
 const Manifiesto = () => {
   const navigate = useNavigate();
@@ -11,22 +16,23 @@ const Manifiesto = () => {
     <div className="manifiesto-container">
       {/* Fondo flotante de números */}
       <div className="numeros-flotando">
-        {numeros.map((numero, index) => (
-          <span
-            key={index}
-            className="numero-flotante"
-            style={{
-              top: `${Math.random() * 90}%`,
-              left: `${Math.random() * 90}%`,
-              fontSize: `${Math.random() * 2 + 1}rem`,
-              animationDuration: `${Math.random() * 5 + 5}s`,
+      {numeros.map((numero, index) => (
+            <span
+                key={index}
+                className="numero-flotante"
+                style={{
+                    top: `${Math.random() * 90}%`,
+                    left: `${Math.random() * 90}%`,
+                    fontSize: `${Math.random() * 2 + 0.8}rem`,
+                    animationDuration: `${Math.random() * 5 + 5}s`,
             }}
-          >
+        >
             {numero}
-          </span>
-        ))}
+        </span>
+            ))}
       </div>
 
+      {/* Contenido principal */}
       <div className="manifiesto-content">
         <h1>Manifiesto Oraculix</h1>
         <p>Todos tenemos números que se repiten en nuestra vida.<br />
