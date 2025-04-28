@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
 const Formulario = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   const [formData, setFormData] = useState({
     nombre: "",
@@ -15,6 +16,13 @@ const Formulario = () => {
 
   const [enviando, setEnviando] = useState(false);
 
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData) {
+      setUser(userData);
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -22,16 +30,20 @@ const Formulario = () => {
   const generarNumeros = async (e) => {
     e.preventDefault();
     setEnviando(true);
-  
+
+    if (!user) {
+      alert("Debes iniciar sesión para continuar.");
+      return;
+    }
+
     const payload = {
       nombre: formData.nombre,
       nacimiento: formData.nacimiento,
       personaQuerida: formData.persona,
       fechaImportante: formData.fechaImportante,
-      deseos: formData.deseos
-        // 🚫 No mandes numerosPrincipales ni numerosComplementarios
-            };
-
+      deseos: formData.deseos,
+      email: user.email, // ✨ Agregamos el email del usuario logueado
+    };
 
     try {
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/pago/crear-preferencia`, {
@@ -55,16 +67,15 @@ const Formulario = () => {
     setEnviando(false);
   };
 
-    //formulariogit
   return (
     <div className="formulario-container">
       <div className="info-signos">
         <h2>Antes de descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida:</h2>
         <ul>
-          <li>📅Tu fecha de nacimiento: Nos ayuda a entender tus patrones energéticos.</li> <br />
-          <li>💖El nombre de una persona querida: Puede ser alguien que ames o hayas amado.</li> <br />
-          <li>📆Una fecha importante en tu vida: Ayuda a ver los ciclos que guían tu historia.</li> <br />
-          <li>🌠Tus deseos más profundos: Aquello que anhelas en tu interior. Nos da dirección.</li> <br />
+          <li>📅 Tu fecha de nacimiento</li>
+          <li>💖 Nombre de una persona querida</li>
+          <li>📆 Una fecha importante en tu vida</li>
+          <li>🌠 Tus deseos más profundos</li>
         </ul>
       </div>
 
@@ -120,7 +131,7 @@ const Formulario = () => {
         ></textarea>
 
         <button type="submit" className="btn" disabled={enviando}>
-            {enviando ? (<><span className="spinner"></span> Descubriendo tus números...</>) : ("Descubrir mis números")}
+          {enviando ? (<><span className="spinner"></span> Descubriendo tus números...</>) : ("Descubrir mis números")}
         </button>
       </form>
     </div>
