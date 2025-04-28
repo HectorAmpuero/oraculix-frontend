@@ -1,52 +1,68 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../assets/styles.css";
 
 const Historial = () => {
+  const [usuario, setUsuario] = useState(null);
   const [lecturas, setLecturas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const cargarLecturas = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura`);
-        const data = await res.json();
-
-        if (!res.ok) {
-          throw new Error(data.error || "Error al cargar lecturas");
-        }
-
-        setLecturas(data.lecturas);
-      } catch (error) {
-        console.error("❌ Error al cargar historial:", error);
-      }
-    };
-
-    cargarLecturas();
+    const userParsed = JSON.parse(localStorage.getItem("user"));
+    if (userParsed) {
+      setUsuario(userParsed);
+      fetchHistorial(userParsed.email);
+    }
   }, []);
+
+  const fetchHistorial = async (email) => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${encodeURIComponent(email)}`
+      );
+      if (!res.ok) {
+        throw new Error("La respuesta del servidor no fue exitosa");
+      }
+      const data = await res.json();
+      setLecturas(data);
+    } catch (err) {
+      console.error("❌ Error al cargar historial:", err);
+    }
+  };
+
+  const volverCuenta = () => {
+    navigate("/cuenta");
+  };
+
+  if (!usuario) {
+    return (
+      <div className="historial-container">
+        <p>Cargando datos de usuario...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="historial-container">
-      <h2 className="titulo-historial">Historial de Lecturas</h2>
+      <h2 className="titulo-historial">📚 HISTORIAL DE LECTURAS</h2>
 
       {lecturas.length === 0 ? (
         <p>No hay lecturas registradas todavía.</p>
       ) : (
-        <div className="tarjetas-container">
-          {lecturas.map((lectura) => (
-            <div className="tarjeta-lectura" key={lectura.id}>
-              <h3>{lectura.nombre}</h3>
-              <p><strong>Números principales:</strong> {lectura.numeros_principales}</p>
-              <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios}</p>
-              <p className="interpretacion"><strong>Interpretación:</strong> {lectura.interpretacion || "Sin interpretación disponible."}</p>
-              <p className="fecha-lectura">
-                📅 {new Date(lectura.fecha_creacion).toLocaleDateString()}
-              </p>
-            </div>
-          ))}
-        </div>
+        lecturas.map((lectura, index) => (
+          <div key={index} className="historial-item">
+            <p><strong>Nombre:</strong> {lectura.nombre}</p>
+            <p><strong>Fecha de creación:</strong> {new Date(lectura.fecha_creacion).toLocaleDateString()}</p>
+            <p><strong>Números principales:</strong> {lectura.numeros_principales}</p>
+            <p><strong>Complementarios:</strong> {lectura.numeros_complementarios}</p>
+            <p><strong>Interpretación:</strong></p>
+            <p>{lectura.interpretacion}</p>
+            <hr />
+          </div>
+        ))
       )}
 
-      <button onClick={() => navigate("/cuenta")} className="btn volver-btn">
+      <button className="btn" onClick={volverCuenta}>
         Volver a Mi Cuenta
       </button>
     </div>
@@ -54,4 +70,5 @@ const Historial = () => {
 };
 
 export default Historial;
+
 
