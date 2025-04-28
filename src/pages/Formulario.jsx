@@ -33,8 +33,10 @@ const Formulario = () => {
 
     if (!user) {
       alert("Debes iniciar sesión para continuar.");
+      setEnviando(false); // <- Agrega esto aquí si quieres ser más prolijo
       return;
     }
+    
 
     const payload = {
       nombre: formData.nombre,
