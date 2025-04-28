@@ -10,6 +10,8 @@ const Navbar = ({ user, handleLogout, openLogin }) => {
       </Link>
 
       <div className="nav-links">
+        <Link to="/manifiesto">Manifiesto</Link> {/* 🆕 Botón Manifiesto siempre visible */}
+
         {user ? (
           <>
             <Link to="/cuenta">Mi cuenta</Link>
@@ -27,5 +29,6 @@ const Navbar = ({ user, handleLogout, openLogin }) => {
 };
 
 export default Navbar;
+
 
 

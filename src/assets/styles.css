@@ -623,6 +623,64 @@ div > .textp2 {
   margin-bottom: 1.5rem;
 }
 
+/* MANIFIESTO */
+.manifiesto-container {
+  position: relative;
+  background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%), url('./fondo-estrella.png');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.manifiesto-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  text-align: center;
+  color: var(--text-light);
+  background: rgba(20, 10, 30, 0.7);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.manifiesto-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.manifiesto-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+.numeros-flotando {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.numero-flotante {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.15);
+  font-weight: bold;
+  animation: flotar infinite alternate ease-in-out;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-20px); }
+}
 
 
 /* PAGINA RESULTADOS */
