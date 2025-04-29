@@ -30,7 +30,7 @@ const Historial = () => {
 
   return (
     <div className="historial-container">
-      <h2 className="titulo-historial">📚 Historial de Lecturas</h2>
+      <h2 className="titulo-historial">Historial de Lecturas</h2>
 
       {lecturas.length === 0 ? (
         <p>No hay lecturas registradas todavía.</p>
