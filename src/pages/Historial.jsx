@@ -18,7 +18,7 @@ const Historial = () => {
   const fetchHistorial = async (email) => {
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/lecturas/${encodeURIComponent(email)}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/lectura/${encodeURIComponent(email)}`
       );
       if (!res.ok) {
         throw new Error("La respuesta del servidor no fue exitosa");
@@ -28,7 +28,7 @@ const Historial = () => {
     } catch (err) {
       console.error("❌ Error al cargar historial:", err);
     }
-  };
+  };  
 
   const volverCuenta = () => {
     navigate("/cuenta");
