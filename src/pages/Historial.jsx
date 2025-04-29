@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
 const Historial = () => {
-  const [usuario, setUsuario] = useState(null);
   const [lecturas, setLecturas] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userParsed = JSON.parse(localStorage.getItem("user"));
-    if (userParsed) {
-      setUsuario(userParsed);
-      fetchHistorial(userParsed.email);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.email) {
+      fetchHistorial(user.email);
     }
   }, []);
 
@@ -28,49 +26,29 @@ const Historial = () => {
     } catch (err) {
       console.error("❌ Error al cargar historial:", err);
     }
-  };  
-
-  const volverCuenta = () => {
-    navigate("/cuenta");
   };
-
-  if (!usuario) {
-    return (
-      <div className="historial-container">
-        <p>Cargando datos de usuario...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="historial-container">
-      <h2 className="titulo-historial">📚 HISTORIAL DE LECTURAS</h2>
+      <h2 className="titulo-historial">📚 Historial de Lecturas</h2>
 
       {lecturas.length === 0 ? (
         <p>No hay lecturas registradas todavía.</p>
       ) : (
-        lecturas.map((lectura, index) => (
-          <div key={index} className="historial-item">
-            <p><strong>Nombre:</strong> {lectura.nombre}</p>
-            <p><strong>Fecha de creación:</strong> {new Date(lectura.fecha_creacion).toLocaleDateString()}</p>
-
-            <p><strong>Números principales:</strong> {lectura.numeros_principales?.split(", ").map((num, idx) => (
-              <span key={idx}>{num} </span>
-            ))}</p>
-
-            <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios?.split(", ").map((num, idx) => (
-              <span key={idx}>{num} </span>
-            ))}</p>
-
-            <p><strong>Interpretación:</strong></p>
-            <p>{lectura.interpretacion}</p>
-
-            <hr />
-          </div>
-        ))
+        <div className="tarjetas-container">
+          {lecturas.map((lectura) => (
+            <div key={lectura.id} className="tarjeta-lectura">
+              <h3>{lectura.nombre}</h3>
+              <p><strong>Números principales:</strong> {lectura.numeros_principales}</p>
+              <p><strong>Números complementarios:</strong> {lectura.numeros_complementarios}</p>
+              <p className="interpretacion">{lectura.interpretacion}</p>
+              <p className="fecha-lectura">📅 {new Date(lectura.fecha_creacion).toLocaleDateString()}</p>
+            </div>
+          ))}
+        </div>
       )}
 
-      <button className="btn" onClick={volverCuenta}>
+      <button className="btn volver-btn" onClick={() => navigate("/cuenta")}>
         Volver a Mi Cuenta
       </button>
     </div>
@@ -78,6 +56,3 @@ const Historial = () => {
 };
 
 export default Historial;
-
-
-
