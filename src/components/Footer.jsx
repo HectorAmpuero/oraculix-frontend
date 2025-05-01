@@ -16,6 +16,15 @@ const Footer = () => {
           ¿Por qué tiene un valor?
         </a>
       </p>
+      <p>
+        <a
+          href="https://www.instagram.com/oraculix_cl/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i className="fab fa-instagram"></i> @oraculix.cl
+        </a>
+      </p>
 
       <ValorModal isOpen={showValor} onClose={() => setShowValor(false)} />
     </footer>

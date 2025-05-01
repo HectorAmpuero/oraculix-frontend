@@ -1159,30 +1159,31 @@ button:disabled {
 /* MEDIA QUERY PARA CELULARES MANIFIESTO */
 @media (max-width: 767px) {
   .manifiesto-content {
-    padding: 1.5rem 1rem;
-    max-width: 90%;
+    padding: 0 !important;
+    max-width: 90% !important;
+    margin-right: 1.5rem;
+    border: 1px solid red ;
   }
 
   .manifiesto-content h1 {
-    font-size: 1.8rem;
+    font-size: 1.6rem !important;
+    padding: 0;
   }
 
   .manifiesto-content p {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  .manifiesto-content strong {
-    font-size: 1.1rem;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
   }
 
   .manifiesto-content .btn {
-    width: 100%;
-    font-size: 1rem;
-    padding: 12px;
-    margin-top: 1.5rem;
+    width: 50% !important;
+    font-size: 1rem !important;
+    padding: 12px !important;
+    margin: 1.5rem 0 1.5rem !important;
   }
 }
+
+
 
 
 /* 🔁 MEDIA QUERY PARA TABLET MANIFIESTO */
@@ -1198,5 +1199,51 @@ button:disabled {
 
   .manifiesto-content p {
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* NAVBAR */
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 1rem;
+    padding: 0.5rem;
+    display: block;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 1rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    overflow-x: hidden;
+  }
+
+  footer a {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* EVITA DESBORDES GLOBALES */
+  body,
+  html {
+    overflow-x: hidden;
   }
 }
