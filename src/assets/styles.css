@@ -1155,3 +1155,48 @@ button:disabled {
     padding: 10px;
   }
 }
+
+/* MEDIA QUERY PARA CELULARES MANIFIESTO */
+@media (max-width: 767px) {
+  .manifiesto-content {
+    padding: 1.5rem 1rem;
+    max-width: 90%;
+  }
+
+  .manifiesto-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .manifiesto-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .manifiesto-content strong {
+    font-size: 1.1rem;
+  }
+
+  .manifiesto-content .btn {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px;
+    margin-top: 1.5rem;
+  }
+}
+
+
+/* 🔁 MEDIA QUERY PARA TABLET MANIFIESTO */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .manifiesto-content {
+    padding: 2rem;
+    max-width: 95%;
+  }
+
+  .manifiesto-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .manifiesto-content p {
+    font-size: 1.1rem;
+  }
+}
