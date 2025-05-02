@@ -67,8 +67,8 @@ const Resultados = () => {
 
       <div className="mensaje-final">
         <p>Cada uno de estos números vibra con tu energía personal.</p>
-        <p>Úsalos como guía, inspiración o simplemente como un impulso hacia lo que deseas.✨</p>
-        <p className="frase">🌟 Confía en tus números. Confía en ti. 🌟</p>
+        <p>Úsalos como guía, inspiración o simplemente como un impulso hacia lo que deseas.</p>
+        <p className="frase">Confía en tus números. Confía en ti.</p>
       </div>
     </div>
   );
