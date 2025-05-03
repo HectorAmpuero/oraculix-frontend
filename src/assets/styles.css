@@ -919,7 +919,7 @@ body {
 
 
  /*==================== CUENTA ====================*/
-.cuenta-container {
+ .cuenta-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -931,87 +931,96 @@ body {
 }
 
 .titulo-cuenta {
-  font-size: 1.4rem;
   font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
   color: #cc9eff;
   margin-bottom: 1rem;
 }
 
 .mensaje-bienvenida {
-  margin: 1.5rem 0;
   font-size: 1rem;
   color: #e0cfff;
   text-align: center;
+  margin: 1.5rem 0;
 }
 
 .frase-motivacional {
-  font-size: 1rem;
   font-style: italic;
-  margin: 1.5rem 0;
+  font-size: 1rem;
   color: #cba6f7;
+  margin: 1.5rem 0;
 }
 
-.contaner-btn {
+/* Contenedor de botones */
+.btn {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  color: white;
+  gap: 0.75rem;
+  width: 90%;
+  max-width: 300px;
+  margin: 0.75rem auto;
+}
+
+/* Botones estándar */
+.btn {
+  background-color: #b26dff;
+  color: #120f1d;
   border: none;
-  padding: 0.75rem 1.5rem;
-  margin: 0.5rem auto;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
   font-weight: bold;
   font-size: 1rem;
+  box-shadow: 0 0 10px rgba(178, 109, 255, 0.5);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
-
 .btn:hover {
-  background-color: #a456f7;
-  color: white;
+  transform: scale(1.03);
 }
 
+/* Botón cerrar sesión (secundario) */
 .logout {
   background: transparent;
   color: #ff6666;
   border: 1px solid #ff6666;
   box-shadow: none;
-  width: 50%;
-  padding: 0;
-  margin: 10px auto 0 auto;
-  display: block;
-  font-size: small;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 300px;
+  margin: 0.5rem auto 0;
+  font-size: 0.875rem;
+  cursor: pointer;
 }
 
-/* TABLET Y ESCRITORIO */
+/* ================ DESKTOP (≥800px) ================ */
 @media (min-width: 800px) {
+  /* 1) Layout en fila y más espacio interior */
   .cuenta-container {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
-  min-height: 100vh;
-  color: #fff;
-  border: 1px solid rebeccapurple;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3rem 2rem;
   }
 
+  /* 2) Título más grande */
   .titulo-cuenta {
     font-size: 1.8rem;
   }
 
+  /* 3) Botones de ancho automático con mínimo */
   .btn {
-    font-size: 1.1rem;
+    width: auto;
+    max-width: none;
+    min-width: 200px;
     padding: 1rem 2rem;
+    font-size: 1.1rem;
   }
-  
+
+  /* 4) “Cerrar sesión” igual que los otros */
   .logout {
-    background: transparent;
-    color: #ff6666;
-    border: 1px solid #ff6666;
-    box-shadow: none;
-    width: 50%;
-    padding: 5px;
-    margin: 10px auto 0 auto;
-    display: block;
-    font-size: small;
+    width: auto;
+    max-width: none;
+    padding: 0.75rem 1.5rem;
   }
 }
 
@@ -1331,25 +1340,5 @@ body {
 /* Ocultar texto “@oraculix.cl” */
 .footer > p:last-of-type a .instagram-text {
   display: none;
-}
-/* ————————— Base (mobile) ————————— */
-.cuenta-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background: #1a0e2a;
-  min-height: 100vh;
-  color: #fff;
-}
-
-/* media query para pantallas ≥800px */
-@media (min-width: 800px) {
-  .cuenta-container {
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 3rem 2rem;
-  }
 }
 }
