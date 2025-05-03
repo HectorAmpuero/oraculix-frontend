@@ -9,20 +9,24 @@ const Footer = () => {
       <p>Los números hablan. Escúchalos.</p>
       <p>© 2025 Oraculix. Todos los derechos reservados.</p>
       <p>
-        <a href="#" onClick={(e) => {
-          e.preventDefault();
-          setShowValor(true);
-        }}>
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setShowValor(true);
+          }}
+        >
           ¿Por qué tiene un valor?
         </a>
       </p>
       <p>
         <a
-          href="https://www.instagram.com/oraculix_cl/"
+          href="https://www.instagram.com/oraculix.cl/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="fab fa-instagram"></i> @oraculix.cl
+          <i className="fab fa-instagram"></i>
+          <span className="instagram-text">Síguenos</span>
         </a>
       </p>
 
@@ -32,3 +36,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

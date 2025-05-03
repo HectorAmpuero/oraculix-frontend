@@ -35,7 +35,7 @@ const Home = () => {
 
       {/* Slide 2 */}
       <section id="slide2" className="slide2">
-        <h2>Los números tienen poder… ¿Cuál es el tuyo?</h2>
+        <h2>Los números tienen poder <br />¿Cuál es el tuyo?</h2>
         <div>
           <p className="textp1">
             Desde tiempos antiguos, la numerología ha sido el puente entre lo visible y lo oculto.

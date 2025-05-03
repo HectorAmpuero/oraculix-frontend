@@ -180,6 +180,14 @@ body {
     color: #120F1D;
   }
   
+  @media (min-width: 800px) {
+   .slide1 h1 {
+    font-size: 2.5rem;
+   }
+  
+  }
+
+
 
   /* SLIDE 2 */  
   .slide2 {
@@ -241,7 +249,7 @@ body {
     }
   
     .slide2 h2 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       text-align: center;
       padding-right: 2rem;
     }
@@ -259,6 +267,9 @@ body {
       display: block;
       margin: 2rem auto 0 auto;
     }
+
+    .slide2 div {
+      margin-left: 90px;
   }
   
   /* SLIDE 3 */
@@ -408,6 +419,131 @@ body {
     max-width: 140px;
   }
 }
+
+/* ================= Manifiesto Oraculix ================= */
+.manifiesto-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* Números flotantes */
+.numeros-flotando {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.numero-flotante {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: var(--font-title);
+  user-select: none;
+  animation-name: flotar, rotarSuave;
+  animation-timing-function: ease-in-out, linear;
+  animation-iteration-count: infinite, infinite;
+  /* duration y delay ya vienen inline con style */
+}
+@keyframes flotar {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+@keyframes rotarSuave {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Contenido principal */
+.manifiesto-content {
+  position: relative;
+  z-index: 1;
+  max-width: 90%;
+  background: rgba(20, 10, 30, 0.8);
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  color: var(--text-light);
+}
+.manifiesto-content h1 {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.manifiesto-content p {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.manifiesto-content p strong {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+/* Botón */
+.manifiesto-content .btn {
+  margin-top: 1.5rem;
+  background-color: #b57bff;
+  color: #120f1d;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(181, 123, 255, 0.5);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.manifiesto-content .btn:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+/* ===== Tablet/Desktop ===== */
+@media (min-width: 768px) {
+  .manifiesto-container {
+    padding: 3rem;
+  }
+  .manifiesto-content {
+    max-width: 700px;
+    padding: 3rem 2rem;
+  }
+  .manifiesto-content h1 {
+    font-size: 2.4rem;
+  }
+  .manifiesto-content p {
+    font-size: 1.1rem;
+  }
+  .manifiesto-content .btn {
+    font-size: 1.1rem;
+    padding: 1rem 2.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .manifiesto-content {
+    max-width: 800px;
+  }
+  .manifiesto-content h1 {
+    font-size: 2.8rem;
+  }
+  .manifiesto-content p {
+    font-size: 1.2rem;
+  }
+}
+
+
+
+
 
   /*==================== FORMULARIO ====================*/
   .formulario-container {
@@ -1143,26 +1279,58 @@ body {
 
 
   /* FOOTER */
-  .footer {
-    grid-area: footer;
-    padding: 1rem;
-    background: var(--secondary-bg);
-    text-align: center;
-    font-size: 0.9rem;
-    color: #b57bff;
-  }
+  /* Contenedor del footer */
+.footer {
+  background: var(--secondary-bg);
+  padding: 2rem 1rem;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #e6d6ff;
+}
 
-  .footer a {
-    color: #c89eff;
-    text-decoration: underline;
-    margin: 0 0.5rem;
-    transition: color 0.3s ease;
-  }
-  
-  .footer a:hover {
-    color: #ffffff;
-  }
-  
-  .footer i.fab {
-    margin-right: 6px;
-  }
+/* Párrafos normales */
+.footer > p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  font-family: 'Lora', serif;
+}
+
+/* Enlace “¿Por qué tiene un valor?” */
+.footer a[href="#"] {
+  color: #c89eff;
+  text-decoration: underline;
+  font-style: italic;
+  cursor: pointer;
+}
+.footer a[href="#"]:hover {
+  color: #fff;
+}
+
+/* Enlace de Instagram */
+.footer .fa-instagram {
+  font-size: 1.2rem;
+}
+
+/* Wrapping del icono + texto “Síguenos” */
+.footer > p:last-of-type a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #e6d6ff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.5rem;
+}
+.footer > p:last-of-type a:hover {
+  color: #fff;
+}
+
+/* Ocultar texto “@oraculix.cl” */
+.footer > p:last-of-type a .instagram-text {
+  display: none;
+}
+
+}
