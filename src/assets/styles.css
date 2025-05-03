@@ -997,7 +997,7 @@ body {
 @media (min-width: 800px) {
   /* 1) Layout en fila y más espacio interior */
   .cuenta-container {
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     padding: 3rem 2rem;
   }
@@ -1341,4 +1341,68 @@ body {
 .footer > p:last-of-type a .instagram-text {
   display: none;
 }
+/* ================= CUENTA – MOBILE-FIRST ================= */
+.cuenta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.cuenta-container > h2,
+.cuenta-container > p,
+.cuenta-container > .marco-bienvenida,
+.cuenta-container > .frase-motivacional {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Botones: todos los .btn dentro de .cuenta-container */
+.cuenta-container > .btn {
+  display: block;
+  width: 90%;
+  max-width: 300px;
+  margin: 0.75rem auto;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* ================= DESKTOP (≥800px) ================= */
+@media (min-width: 800px) {
+  .cuenta-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 2rem;
+    padding: 3rem 2rem;
+  }
+
+  /* Hacer que título, email y texto abarquen full-width en la fila */
+  .cuenta-container > h2,
+  .cuenta-container > p,
+  .cuenta-container > .marco-bienvenida,
+  .cuenta-container > .frase-motivacional {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  /* Botones en fila con ancho automático */
+  .cuenta-container > .btn {
+    display: inline-block;
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 180px;
+    margin: 0.5rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
 }
