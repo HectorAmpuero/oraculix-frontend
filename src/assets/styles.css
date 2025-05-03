@@ -981,7 +981,7 @@ body {
 }
 
 /* TABLET Y ESCRITORIO */
-@media (min-width: 800px) {
+@media (max-width: 800px) {
   .cuenta-container {
   display: flex;
   flex-direction: column;
