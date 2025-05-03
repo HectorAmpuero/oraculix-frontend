@@ -1032,7 +1032,7 @@ body {
   justify-content: center;
   padding: 2rem 1rem;
   background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
-  min-height: 100vh;
+  min-height: 80vh;
   color: #fff;
 }
 
@@ -1086,17 +1086,21 @@ body {
 
 /* Botón cerrar sesión (secundario) */
 .logout {
-  background: transparent;
-  color: #ff6666;
-  border: 1px solid #ff6666;
+  background: var(--accent-color);
+  color: var(--secondary-bg);
   box-shadow: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
   width: 90%;
-  max-width: 300px;
+  max-width: 200px;
   margin: 0.5rem auto 0;
   font-size: 0.875rem;
   cursor: pointer;
+}
+
+.logout:hover {
+  background: var(--text-dark);
+  color: var(--secondary-bg);
 }
 
 /* ================ DESKTOP (≥800px) ================ */
@@ -1104,8 +1108,9 @@ body {
   /* 1) Layout en fila y más espacio interior */
   .cuenta-container {
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     padding: 3rem 2rem;
+    gap: 10px;
   }
 
   /* 2) Título más grande */

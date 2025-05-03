@@ -44,13 +44,13 @@ const Cuenta = () => {
 
   return (
     <div className="cuenta-container">
-      <h2 className="titulo-cuenta">👤 BIENVENIDO, {usuario.nombre?.toUpperCase() || "Usuario"}!</h2>
+      <h2 className="titulo-cuenta">BIENVENIDO, {usuario.nombre?.toUpperCase() || "Usuario"}!</h2>
       <p> Correo: {usuario.email}</p>
 
       <div className="marco-bienvenida">
         <p>¿Estás listo para descubrir los números que guían tu vida?</p>
         <button className="btn" onClick={() => navigate("/formulario")}>
-          ✨ Comenzar la lectura
+        Comenzar la lectura
         </button>
       </div>
 
@@ -59,11 +59,11 @@ const Cuenta = () => {
       </p>
 
       <button className="btn" onClick={() => navigate("/historial")}>
-        📖 Ver historial de lecturas
+        Ver historial de lecturas
       </button>
 
       <button className="btn logout" onClick={handleLogout}>
-        🔒 Cerrar sesión
+        Cerrar sesión
       </button>
     </div>
   );
