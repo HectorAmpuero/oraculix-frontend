@@ -1169,14 +1169,33 @@ body {
   }
   
  /* ===================== Interpretación ===================== */
-.interpretacion-box {
-  max-width: 800px;        /* ancho máximo para no desbordar */
-  margin: 2rem auto;       /* separa y centra horizontalmente */
-  padding: 1.5rem;         /* un poco de relleno interior */
-  background: rgba(255,255,255,0.03);  /* sutil contraste */
-  border-radius: 8px;      /* esquinas suaves */
-  line-height: 1.6;        /* mayor interlineado */
-  text-align: justify;     /* párrafos justificados */
+ .interpretacion-box {
+  /* Tipografía elegante */
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  color: var(--text-light);
+  
+  /* Lectura cómoda */
+  line-height: 1.8;
+  text-align: justify;
+  letter-spacing: 0.5px;
+  
+  /* Centrado y ancho controlado */
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+/* Separación clara entre párrafos */
+.interpretacion-box p {
+  margin-bottom: 1.2rem;
+}
+
+/* Si quieres destacar la primera línea del párrafo */
+.interpretacion-box p::first-line {
+  font-weight: bold;
 }
 
 .interpretacion-box h3 {
