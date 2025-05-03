@@ -1168,15 +1168,24 @@ body {
     gap: 0.5rem;
   }
   
-  .interpretacion-box {
-    margin: 2rem 0;
-  }
-  
-  .interpretacion-box h3 {
-    font-size: 1.2rem;
-    color: #ddaaff;
-    margin-bottom: 0.5rem;
-  }
+ /* ===================== Interpretación ===================== */
+.interpretacion-box {
+  max-width: 800px;        /* ancho máximo para no desbordar */
+  margin: 2rem auto;       /* separa y centra horizontalmente */
+  padding: 1.5rem;         /* un poco de relleno interior */
+  background: rgba(255,255,255,0.03);  /* sutil contraste */
+  border-radius: 8px;      /* esquinas suaves */
+  line-height: 1.6;        /* mayor interlineado */
+  text-align: justify;     /* párrafos justificados */
+}
+
+.interpretacion-box h3 {
+  text-align: center;      /* título centrado */
+  margin-bottom: 1rem;
+  font-family: var(--font-title);
+  color: var(--accent-color);
+}
+
   
   .mensaje-final p {
     margin-top: 1rem;
