@@ -271,6 +271,7 @@ body {
     .slide2 div {
       margin-left: 90px;
   }
+}
   
   /* SLIDE 3 */
   .slide3 {
@@ -1333,12 +1334,13 @@ body {
   font-family: 'Poppins', sans-serif;
   margin-top: 0.5rem;
 }
+
 .footer > p:last-of-type a:hover {
   color: #fff;
 }
 
 /* Ocultar texto “@oraculix.cl” */
+
 .footer > p:last-of-type a .instagram-text {
   display: none;
-}
 }
