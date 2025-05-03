@@ -29,7 +29,7 @@ const Home = () => {
         <h1>Descubre tus números de la suerte <br /> que guían tu destino</h1>
         <p>Nada en la vida es coincidencia. Cada número es un mensaje esperando ser revelado.</p>
         <button className="btn" onClick={() => scrollToSlide("slide2")}>
-          Revela tu destino ahora
+          Descubre más
         </button>
       </section>
 

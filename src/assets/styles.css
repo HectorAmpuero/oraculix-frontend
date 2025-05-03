@@ -633,17 +633,22 @@ body {
     gap: 2rem;
     min-height: 100vh;
   }
-  
+
   .info-signos {
     max-width: 600px;
-    text-align: center;
+    text-align: left;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+    font-family: var(--font-text);
   }
   
   .info-signos h2 {
     font-size: 1.5rem;
-    color: var(--text-dark);
-    font-family: var(--font-title);
+    font-family: var(--font-text);
     margin-bottom: 1rem;
+    color: var(--accent-color);
   }
   
   .info-signos ul {
@@ -657,51 +662,35 @@ body {
     margin-bottom: 0.6rem;
   }
   
-  /* FORMULARIO BOX */
+  /* quitamos el estilo por defecto de la lista */
+.info-signos-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* cada elemento en fila, con un gap razonable */
+.info-signos-list li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  font-family: var(--font-text);
+  line-height: 1.5;
+  color: var(--text-light);
+  text-align: start;
+}
+
+/* el icono */
+.info-signos-list li i {
+  margin-right: 0.75rem;
+  margin-top: 0.2rem; /* ajusta alineación vertical */
+  color: var(--accent-color);
+  font-size: 1rem;
+  flex-shrink: 0;
   
-  .info-signos {
-    max-width: 600px;
-    text-align: left;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 1rem;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-    font-family: var(--font-text);
-  }
-  
-  .info-signos h2 {
-    text-align: center;
-    font-family: var(--font-title);
-    color: var(--text-dark);
-    margin-bottom: 2rem;
-    font-size: 1.6rem;
-  }
-  
-  .signo-item {
-    margin-bottom: 1.5rem;
-  }
-  
-  .signo-item h3 {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    margin-bottom: 0.3rem;
-  }
-  
-  .signo-item p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #d6c2ff;
-  }
-  
-  .formulario-container {
-    background: radial-gradient(ellipse at center, #1a0e2a 0%, #0c0512 100%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 15px;
-    color: #f0e0ff;
-  }
-  
+}
+
+  /* FORMULARIO BOX */  
   .formulario-box {
     background-color: #231b36;
     padding: 25px 20px;
@@ -738,8 +727,8 @@ body {
   .formulario-box .btn {
     display: block;
     margin: 30px auto 0 auto;
-    background-color: #b277f2;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--secondary-bg);
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
@@ -749,6 +738,12 @@ body {
     box-shadow: 0 0 15px rgba(181, 123, 255, 0.5);
     transition: all 0.3s ease;
   }
+
+  .formulario-box .btn:hover{
+    background-color: var(--text-dark);
+    color: var(--secondary-bg);
+  }
+
   
   /* Spinner de carga */
   .spinner {
@@ -768,7 +763,7 @@ body {
     100% { transform: rotate(360deg); }
   }
 
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 1000px) {
     .formulario-container {
       display: flex;
       flex-direction: row;
@@ -786,7 +781,7 @@ body {
   
     .info-signos h2 {
       font-size: 2rem;
-      color: #d6a0ff;
+      color: var(--accent-color);
       margin-bottom: 20px;
       text-transform: uppercase;
       line-height: 1.4;
@@ -814,6 +809,30 @@ body {
       margin: 30px auto 0 auto;
       display: block;
     }
+  }
+  .info-signos-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* cada elemento en fila, con un gap razonable */
+  .info-signos-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    font-family: var(--font-text);
+    line-height: 1.5;
+    color: var(--text-light);
+  }
+  
+  /* el icono */
+  .info-signos-list li i {
+    margin-right: 0.75rem;
+    margin-top: 0.2rem; /* ajusta alineación vertical */
+    color: var(--accent-color);
+    font-size: 1rem;
+    flex-shrink: 0;
   }
   
   /*==================== REGISTRO ====================*/
