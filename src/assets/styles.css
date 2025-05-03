@@ -1342,6 +1342,7 @@ body {
   display: none;
 }
 /* ================= CUENTA – MOBILE-FIRST ================= */
+@media (max-width: 800px) {
 .cuenta-container {
   display: flex;
   flex-direction: column;
@@ -1371,6 +1372,7 @@ body {
   margin: 0.75rem auto;
   padding: 0.8rem 1.5rem;
   font-size: 1rem;
+}
 }
 
 /* ================= DESKTOP (≥800px) ================= */
