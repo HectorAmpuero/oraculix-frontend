@@ -1332,5 +1332,24 @@ body {
 .footer > p:last-of-type a .instagram-text {
   display: none;
 }
+/* ————————— Base (mobile) ————————— */
+.cuenta-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: #1a0e2a;
+  min-height: 100vh;
+  color: #fff;
+}
 
+/* media query para pantallas ≥800px */
+@media (min-width: 800px) {
+  .cuenta-container {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 3rem 2rem;
+  }
+}
 }
