@@ -55,12 +55,12 @@ const Formulario = () => {
 
       const data = await response.json();
 
-      if (response.status === 403 && data.error === "Ciclo lunar no completado") {
+      if (response.status === 403) {
         setBloqueado(true);
-        setMensajeBloqueo(data.mensaje);
+        setMensajeBloqueo(data.error || "No puedes hacer otra lectura por ahora.");
         setEnviando(false);
         return;
-      }
+      }      
 
       if (data.id) {
         window.location.href = `https://www.mercadopago.cl/checkout/v1/redirect?pref_id=${data.id}`;
