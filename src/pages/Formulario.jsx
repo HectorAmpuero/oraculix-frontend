@@ -13,7 +13,7 @@ const Formulario = () => {
     deseos: "",
   });
   const [enviando, setEnviando] = useState(false);
-  const [bloqueado, setBloqueado] = useState(false); // para mostrar modal
+  const [bloqueado, setBloqueado] = useState(false); // Modal místico
   const [mensajeBloqueo, setMensajeBloqueo] = useState("");
 
   useEffect(() => {
@@ -55,9 +55,10 @@ const Formulario = () => {
 
       const data = await response.json();
 
-      if (response.status === 403 && data.error?.includes("2 ciclos lunares")) {
+      if (response.status === 403 && data.error === "Ciclo lunar no completado") {
         setBloqueado(true);
-        setMensajeBloqueo(data.error);
+        setMensajeBloqueo(data.mensaje);
+        setEnviando(false);
         return;
       }
 

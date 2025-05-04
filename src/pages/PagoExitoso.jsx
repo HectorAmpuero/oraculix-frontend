@@ -20,8 +20,10 @@ const PagoExitoso = () => {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/lectura/preference/${preferenceId}`);
         const data = await res.json();
 
-        if (!res.ok) {
-          throw new Error(data.error || "No se encontró la lectura asociada.");
+        if (!res.ok || !data.lectura) {
+          // Si no hay lectura, probablemente fue bloqueado por los ciclos lunares
+          alert("Tu lectura no fue generada. Revisa si ya hiciste una lectura recientemente.");
+          return navigate("/formulario");
         }
 
         // Guardamos en localStorage
@@ -35,6 +37,8 @@ const PagoExitoso = () => {
         navigate("/resultados");
       } catch (error) {
         console.error("❌ Error al procesar el pago exitoso:", error);
+        alert("Ocurrió un problema al procesar tu lectura. Por favor, vuelve a intentarlo.");
+        navigate("/formulario");
       }
     };
 
@@ -43,7 +47,7 @@ const PagoExitoso = () => {
 
   return (
     <div className="resultados-container">
-      <h2>Procesando tu lectura numerológica...</h2>
+      <h2>PROCESANDO TU LECTURA NUMEROLÓGICA...</h2>
       <p>Por favor, espera unos segundos mientras generamos tu lectura personalizada.</p>
     </div>
   );
