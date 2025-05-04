@@ -865,7 +865,7 @@ body {
   font-family: 'Cinzel Decorative', serif;
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #ffccff;
+  color: var(--accent-color);
 }
 
 .modal-registro p {
@@ -876,7 +876,7 @@ body {
 }
 
 .modal-registro .btn {
-  background-color: #b57bff;
+  background-color: var(--accent-color);
   color: #120f1d;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -889,7 +889,7 @@ body {
 }
 
 .modal-registro .btn:hover {
-  background-color: #ffd700;
+  background-color: var(--text-dark);
   color: #1a0e2a;
 }
 
