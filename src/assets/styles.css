@@ -573,7 +573,7 @@ body {
 /* Botón */
 .manifiesto-content .btn {
   margin-top: 1.5rem;
-  background-color: #b57bff;
+  background-color: var(--accent-color);
   color: #120f1d;
   border: none;
   padding: 0.8rem 2rem;
@@ -585,7 +585,7 @@ body {
   transition: background 0.3s ease, transform 0.2s ease;
 }
 .manifiesto-content .btn:hover {
-  background-color: var(--accent-color);
+  background-color: var(--text-dark);
   transform: scale(1.05);
 }
 
@@ -1038,6 +1038,17 @@ body {
   color: var(--accent-color);
 }
 
+.modal-content .close-btn {
+  background-color: var(--accent-color);
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(181, 123, 255, 0.5);
+}
+
+.modal-content .close-btn:hover{
+  background-color: var(--text-dark);
+  color: var(--secondary-bg);
+}
+
 /* Formulario en columna */
 .boxform {
   display: flex;
@@ -1132,6 +1143,12 @@ body {
   margin-bottom: 1rem;
 }
 
+.marco-bienvenida {
+  text-align: center;
+  font-family: var(--font-text);
+  color: var(--text-dark);
+}
+
 .mensaje-bienvenida {
   font-size: 1rem;
   color: #e0cfff;
@@ -1206,7 +1223,11 @@ body {
   .titulo-cuenta {
     font-size: 1.8rem;
   }
-
+  .marco-bienvenida {
+    text-align: center;
+    font-family: var(--font-text);
+    color: var(--text-dark);
+  }
   /* 3) Botones de ancho automático con mínimo */
   .btn {
     width: auto;
@@ -1223,6 +1244,22 @@ body {
     padding: 0.75rem 1.5rem;
   }
 }
+
+@media (max-width: 425px) {
+  .titulo-cuenta {
+    text-align: center;
+    
+  }
+  .marco-bienvenida {
+    text-align: center;
+    font-family: var(--font-text);
+    color: var(--text-dark);
+  }
+  .frase-motivacional {
+    text-align: center;
+  }
+}
+
 
   /*==================== RESULTADOS ====================*/
   .resultados-container {
@@ -1521,7 +1558,7 @@ body {
   background: var(--secondary-bg);
   padding: 2rem 1rem;
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-alt);
   color: #e6d6ff;
 }
 
@@ -1529,13 +1566,13 @@ body {
 .footer > p {
   margin: 0.25rem 0;
   font-size: 0.9rem;
-  font-family: 'Lora', serif;
+  font-family: var(--font-alt);
 }
 
 /* Enlace “¿Por qué tiene un valor?” */
 .footer a[href="#"] {
   color: #c89eff;
-  text-decoration: underline;
+  text-decoration: none;
   font-style: italic;
   cursor: pointer;
 }
@@ -1558,7 +1595,7 @@ body {
   text-decoration: none;
   font-weight: bold;
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-text);
   margin-top: 0.5rem;
 }
 
