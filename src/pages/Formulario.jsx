@@ -80,10 +80,10 @@ const Formulario = () => {
       <div className="info-signos">
         <h2>Antes de descubrir tus números, necesitamos conocer algunos aspectos clave de tu vida:</h2>
         <ul className="info-signos-list">
-          <li><i className="fas fa-gem"></i> Tu fecha de nacimiento: Identifica tu esencia.</li>
-          <li><i className="fas fa-heart"></i> Persona querida: Conexiones emocionales.</li>
-          <li><i className="fas fa-calendar-alt"></i> Fecha importante: Momentos que marcan tu camino.</li>
-          <li><i className="fas fa-star"></i> Deseos: Dan forma a tu energía actual.</li>
+          <li><i className="fas fa-gem"></i> Tu fecha de nacimiento: nos permite identificar tu número base, asociado a tu identidad y esencia.</li>
+          <li><i className="fas fa-heart"></i> Persona querida: nos ayuda a calcular conexiones emocionales y energéticas en tu vida.</li>
+          <li><i className="fas fa-calendar-alt"></i> Fecha importante: Revela números que han marcado etapas clave para ti.</li>
+          <li><i className="fas fa-star"></i> Deseos: Los deseos dan contexto y dirección a los números que te acompañan hoy.</li>
         </ul>
       </div>
 
