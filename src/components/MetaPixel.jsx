@@ -2,8 +2,13 @@ import { useEffect } from "react";
 
 export default function MetaPixel() {
   useEffect(() => {
-    if (window.fbq) return;
+    // Si ya está cargado, no lo cargues de nuevo
+    if (window.fbq) {
+      window.fbq("track", "PageView");
+      return;
+    }
 
+    // Cargar el script del Pixel
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -23,9 +28,15 @@ export default function MetaPixel() {
       s.parentNode.insertBefore(t, s);
     })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
 
-    window.fbq("init", "1059875085992000");
-    window.fbq("track", "PageView");
+    // Esperar un poco para asegurar que fbq esté listo
+    setTimeout(() => {
+      if (window.fbq) {
+        window.fbq("init", "1059875085992000");
+        window.fbq("track", "PageView");
+      }
+    }, 500); // medio segundo de espera
   }, []);
 
   return null;
 }
+
