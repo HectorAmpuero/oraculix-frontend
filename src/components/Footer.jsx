@@ -21,7 +21,7 @@ const Footer = () => {
       </p>
       <p>
         <a
-          href="https://www.instagram.com/oraculix.cl/"
+          href="https://www.instagram.com/oraculix_cl/"
           target="_blank"
           rel="noopener noreferrer"
         >
